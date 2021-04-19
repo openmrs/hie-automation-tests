@@ -23,6 +23,7 @@ def __init__( context):
     context.taskPath = '/ws/rest/v1/taskaction'  
     #turns off storing EMPI Ids
     context.processedEMPI = True
+    context.obsFhirPath = '/ws/fhir2/R4/Observation'
 
 # call this method to post 1 sentinel event record to OpenMRS    
 def postDataBySentinelEventType(context, hivSentinelEventType):        
@@ -478,4 +479,17 @@ def getCaseReportRecord(context, url):
         response.close()    
       
     data = response.json()  
-    return data   
+    return data  
+
+def postObsFhirData( context, obsFhirData):
+    openMRSInstance = context.serverMap.get(1)
+    headers = {'Content-Type': 'application/json', 'Connection':'close'}  
+    response = requests.post(openMRSInstance["baseUrl"] + context.obsFhirPath, obsFhirData, headers=headers, auth=(openMRSInstance["username"], openMRSInstance["password"]))
+    
+    if (response.status_code > 204) :
+            raise Exception(response.status_code)
+       
+    data = response.json()
+    response.close()
+    return data 
+
