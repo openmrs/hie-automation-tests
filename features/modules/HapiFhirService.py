@@ -11,6 +11,9 @@ def __init__(context):
     context.fhirPatientUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Patient/'
     context.fhirEncounterUrl =  context.configData["HAPI-FHIR"]["baseUrl"] + '/Encounter?patient='
     context.fhirObservationUrl =  context.configData["HAPI-FHIR"]["baseUrl"] + '/Observation?patient='
+    context.TX_PVLSUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/TX-PVLS/$evaluate-measure?periodStart=2019-01-01&periodEnd=2030-12-31'
+    context.Hapi = context.configData["HAPI-FHIR"]
+    context.txpvlsScore =context.configData["TX_PVLS-SCORE"] 
     
 def deleteOldHapiFhirRecords(context, deleteDataFileName): 
     logging.info ('Starting cleaning of previous run HAPI-FHIR data')
@@ -81,3 +84,27 @@ def checkFhirData(context) :
         
     response.close()         
     assert (isSuccessful)
+    
+def checkTX_PVLSMeasureReport(context) :    
+    logging.info("Check HAPI-FHIR for TX_PVLS REPORT - ")
+    count = 0 
+    isSuccessful = False
+    while (count < 5 and isSuccessful == False) :          
+       
+        response = requests.get( context.TX_PVLSUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
+        count += 1
+        if (response.status_code > 204) :
+            time.sleep(5)
+            continue
+        else :
+            data = response.json() 
+            context.measureScore =  data['group'][0]['measureScore']['value']
+            if(round(context.measureScore, 2) == context.txpvlsScore):
+                isSuccessful = True        
+                break
+            else :
+                isSuccessful = False
+                break
+        
+    response.close()         
+    assert (isSuccessful)      

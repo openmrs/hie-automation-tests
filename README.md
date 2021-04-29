@@ -12,9 +12,9 @@ User is familiarity with OpenMRS, Python, and BDD framework Behave is assumed.  
   
 ### Prerequisites     
 OpenMRS_BulkHIVDataLoad needs the following software -   
-  	Python version >= 3.7     
-  	Behave version >= 1.2    
-  	OpenMRS Platform version >= 2.2   
+*  Python version >= 3.7     
+*  Behave version >= 1.2    
+*  OpenMRS Platform version >= 2.2   
   
 ### Configuration  
 Update the config.json located under the config folder. Only 2 config elements (“datafilename” and “openmrsInstances”) are needed for this test. The other elements in the config file can be there or can be removed. They are optional. The value of datafilename needs to be “simulatordataset-large.json” and openmrsInstances needs to be configured with at least one OpenMRS instance information.  
@@ -40,14 +40,14 @@ User is familiarity with OpenMRS, OpenMRS Case Based Reporting (CBR) Module, Pyt
 ### Prerequisites      
 Both CBR_HIVCareContinuum and CBR_Multi_location_HIVCareContinuum tests needs the following software   
   
-  	Python version >= 3.7     
-  	Behave version >= 1.2    
-  	OpenMRS Platform version >= 2.2    
-  	OpenMRS Module - Case Based Module version >= 2.0  (Not yet released)  
-  	OpenMRS Module IDGen version >= 4.7    
-    OpenEMPI platform >= 3.5.0c  
-    OpenHIM platform >= 1.13   
-  	OpenHIM FHIR-Mediator >= Latest (Not yet released)   HAPIFHIR instance >= 4.2.0 
+ * Python version >= 3.7     
+ * Python version >= 3.7         *  Behave version >= 1.2    
+ * OpenMRS Platform version >= 2.2    
+ * OpenMRS Module - Case Based Module version >= 2.0  (Not yet released)  
+ * OpenMRS Module IDGen version >= 4.7    
+  * OpenEMPI platform >= 3.5.0c  
+ * OpenHIM platform >= 1.13   
+* OpenHIM FHIR-Mediator >= Latest (Not yet released)   HAPIFHIR instance >= 4.2.0 
     
 Note: CBR module must be configured (OpenMRS Home -> Case Reports ->Configure) to use Case Report Format as HL7 FHIR  	  	  
   
@@ -83,7 +83,8 @@ This test tests the entire workflow of Case Based Reporting module. Based on the
   
 ##### Additional Configuration : Before you execute this test, please update config.json, set dataFilename value as simulator-dataset-small.json  
  You can execute the test with the below statement.  
-   	behave --no-logcapture --include ./features/CBR_HIVCareContinuum  
+
+    behave --no-logcapture --include ./features/CBR_HIVCareContinuum  
   
 #### CBR_Multi_location_HIVCareContinuum  
 This test also tests the entire workflow of Case Based Reporting module. But instead of posting data based on event as the previous test CBR_HIVCareContinuumSteps does, this test reads the data file, posts Patient records into multiple OpenMRS instances and posts all sentinel events sorted by date to OpenMRS instances. For each posted sentinel event, the test confirms that   
@@ -94,7 +95,7 @@ This test also tests the entire workflow of Case Based Reporting module. But ins
 ##### Additional Configuration: Before you execute this test, please update config.json, set dataFilename value as simulator-dataset-multiple-instances.json. Also, you need at least 2 OpenMRS instances running for this test.  
   
  You can execute the test with the below statement.  
-   	behave --no-logcapture --include ./features/CBR_Multi_location_HIVCareContinuum  
+   		behave --no-logcapture --include ./features/CBR_Multi_location_HIVCareContinuum  
   
 ## Testing CBR with OpenMRS, OpenHIM, OpenEMPI and OpenHSR  
  The two tests (CBR_HIVCareContinuum and  CBR_Multi_location_HIVCareContinuumSteps) discussed earlier can also be used to test CBR (Case Based Reporting) workflow that uses OpenSHR as shared health repository .  
@@ -104,15 +105,14 @@ User is familiarity with OpenMRS, OpenMRS Case Based Reporting (CBR) Module, Pyt
   
 ### Prerequisites     
 CBR_HIVCareContinuum and CBR_Multi_location_HIVCareContinuumSteps needs the following software   
-  
-  	Python version >= 3.7     
-  	Behave version >= 1.2    
-  	OpenMRS Platform version >= 2.2    
-  	OpenMRS Module - Case Based Module version >= 2.0  (Not yet released)  
-  	OpenMRS Module IDGen version >= 4.7    
+  *	Python version >= 3.7     
+  *	Behave version >= 1.2    
+  *	OpenMRS Platform version >= 2.2    
+  *	OpenMRS Module - Case Based Module version >= 2.0  (Not yet released)  
+  *	OpenMRS Module IDGen version >= 4.7    
     OpenEMPI platform >= 3.5.0c 
-    OpenHIM platform >= 1.13   
-  	OpenHIM XDS-Mediator >= Latest (https://github.com/jembi/openhim-mediator-xds)  
+  *  OpenHIM platform >= 1.13   
+  *	OpenHIM XDS-Mediator >= Latest (https://github.com/jembi/openhim-mediator-xds)  
   	OpenMRS instance with OpenSHR >= Latest (https://github.com/jembi/openshr)  
   
 Note: CBR module must be configured (OpenMRS Home -> Case Reports ->Configure) to use Case Report Format as HL7 CDA  	  
@@ -144,14 +144,18 @@ Update the config.json located under the config folder. All elements except HAPI
 #### CBR_HIVCareContinuum  
 ##### Additional Configuration : Before you execute this test, please update config.json, set dataFilename value as simulator-dataset-small.json  
  You can execute the test with the below statement.  
+
    	behave --no-logcapture --include ./features/CBR_HIVCareContinuum  
   
 #### CBR_Multi_location_HIVCareContinuum  
 ##### Additional Configuration: Before you execute this test, please update config.json, set dataFilename value as simulator-dataset-multiple-instances.json. Also, you need at least 2 OpenMRS instances running for this test.  
   
  You can execute the test with the below statement.  
+
    	behave --no-logcapture --include ./features/CBR_Multi_location_HIVCareContinuum  
 
+## TESTING PLIR SETUP
+see [PLIR-TEST](./PLIR-TEST.md)
 
 ## Public Domain Standard Notice
 This repository constitutes a work of the United States Government and is not

@@ -8,6 +8,7 @@ import hashlib
 def __init__(context):
     context.openHIMAuthenticationUrl = context.configData["openHIM"]["baseUrl"] + '/authenticate/root@openhim.org'
     context.openHIMTransactionsURL = context.configData["openHIM"]["baseUrl"] + '/transactions'
+    context.openHIMPass = context.configData["openHIM"]["password"]
     context.isFHIRTransaction = True
        
 def checkOpenHIMTransaction(context):  
@@ -38,6 +39,42 @@ def checkOpenHIMTransaction(context):
                 context.isFHIRTransaction = False               
             break   
     assert (successful)
+    
+def checkOpenHIMPLIRTransaction(context): 
+    time.sleep(20)   
+    logging.info("Confirm transactions sent to OpenHIM are successful")
+    index = 0 
+    successful = False   
+    while index < 10:
+        index += 1           
+        rHeaders = getOpenHIMHeaders(context)
+        response = requests.get(context.openHIMTransactionsURL, headers=rHeaders, verify=False)
+        
+        if (response is not None ) :
+            response.close()         
+        if (response.status_code > 201) : 
+            logging.info(response.content)
+            logging.info("Retrying to check transactions A")        
+            continue 
+              
+        data = None
+        transactionData = None
+        try :
+            data = response.json()
+            transactionData = data[0] 
+        except : 
+            logging.info("Retrying to check transactions B")
+            time.sleep(10)
+            continue
+                                 
+        #transactionTime = datetime.strptime(transaction['request']['timestamp'], '%Y-%m-%dT%H:%M:%S.%fZ')
+        if (str(transactionData['status']) !='Successful') :
+            logging.info("There are some transactions that are still not complete. we will wait for 15 seconds and check for status")                                                                
+            time.sleep(10)
+            continue
+        else :              
+            successful = True     
+    assert (successful)    
 
 
 def getOpenHIMHeaders (context):
@@ -53,7 +90,7 @@ def getOpenHIMHeaders (context):
             
     data = response.json() 
     response.close()
-    passhash = hashlib.sha512((data['salt'] + "openhim").encode()).hexdigest()
+    passhash = hashlib.sha512((data['salt'] + context.openHIMPass).encode()).hexdigest()
     token = hashlib.sha512((passhash + data['salt'] + data['ts']).encode()).hexdigest()
 
     ts = str(data['ts'])

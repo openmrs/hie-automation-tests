@@ -1,0 +1,52 @@
+{
+    "resourceType": "Observation",
+    "id": "087dbc41-4323-46ac-9842-785b5563cc7c",
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><table class=\"hapiPropertyTable\"><tbody><tr><td>Id:</td><td>087dbc41-4323-46ac-9842-785b5563cc7c</td></tr><tr><td>Status:</td><td>FINAL</td></tr><tr><td>Category:</td><td> Laboratory </td></tr><tr><td>Code:</td><td> HIV viral load </td></tr><tr><td>Subject:</td><td><a href=\"http://localhost:8080/openmrs/ws/fhir2/R4/Patient/2dbb754b-fedb-47d9-bddb-451aecd68819\">Beatrice PatientC Mwebaza (OpenMRS ID: 10002T)</a></td></tr><tr><td>Encounter:</td><td><a href=\"http://localhost:8080/openmrs/ws/fhir2/R4/Encounter/9aa73a1b-cc26-4c23-8c73-818e146a940f\">Encounter/9aa73a1b-cc26-4c23-8c73-818e146a940f</a></td></tr><tr><td>Effective:</td><td> 19 April 2021 13:40:37 </td></tr><tr><td>Issued:</td><td>19/04/2021 01:40:37 PM</td></tr><tr><td>Value:</td><td>1000.0 </td></tr></tbody></table></div>"
+    },
+    "status": "final",
+    "category": [
+        {
+            "coding": [
+                {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "laboratory",
+                    "display": "Laboratory"
+                }
+            ]
+        }
+    ],
+    "code": {
+        "coding": [
+            {
+                "code": "856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "display": "HIV viral load"
+            },
+            {
+                "system": "https://openconceptlab.org/orgs/CIEL/sources/CIEL",
+                "code": "856",
+                "display": "HIV viral load"
+            },
+            {
+                "system": "http://loinc.org",
+                "code": "25836-8",
+                "display": "HIV viral load"
+            }
+        ]
+    },
+    "subject": {
+        "reference": "Patient/2dbb754b-fedb-47d9-bddb-451aecd68819",
+        "type": "Patient",
+        "display": "Beatrice PatientC Mwebaza (OpenMRS ID: 10002T)"
+    },
+    "encounter": {
+        "reference": "Encounter/9aa73a1b-cc26-4c23-8c73-818e146a940f",
+        "type": "Encounter"
+    },
+    "effectiveDateTime": "2021-04-19T13:40:37+00:00",
+    "issued": "2021-04-19T13:40:37.000+00:00",
+    "valueQuantity": {
+        "value": 1000
+    }
+}

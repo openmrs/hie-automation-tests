@@ -83,3 +83,17 @@ def storeRunData(context):
     
     with open(deleteFile, 'w') as outfile:        
         json.dump(data, outfile)
+
+def readJsonData(filePath):
+    cur_dir = os.path.abspath(os.path.dirname(__file__))  
+    config_file = os.path.join(cur_dir, filePath)
+    with open(config_file) as json_file:
+        data = json.load(json_file)
+        jsonData= json.dumps(data)
+        
+    return jsonData   
+
+def innitializeData(context):
+    loadConfigData(context)
+    initialize(context)
+    
