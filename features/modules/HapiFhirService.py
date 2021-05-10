@@ -11,9 +11,9 @@ def __init__(context):
     context.fhirPatientUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Patient/'
     context.fhirEncounterUrl =  context.configData["HAPI-FHIR"]["baseUrl"] + '/Encounter?patient='
     context.fhirObservationUrl =  context.configData["HAPI-FHIR"]["baseUrl"] + '/Observation?patient='
-    context.TX_PVLSUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/TX-PVLS/$evaluate-measure?periodStart=2019-01-01&periodEnd=2030-12-31'
+    context.evaluateMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["MeasureResourceId"] + '/$evaluate-measure?periodStart=' + context.configData["IndicatorStartDate"] + '&periodEnd=' + context.configData["IndicatorEndDate"] 
     context.Hapi = context.configData["HAPI-FHIR"]
-    context.txpvlsScore =context.configData["TX_PVLS-SCORE"] 
+    context.expextedMeasureScore =context.configData["MeasureScore"] 
     
 def deleteOldHapiFhirRecords(context, deleteDataFileName): 
     logging.info ('Starting cleaning of previous run HAPI-FHIR data')
@@ -91,7 +91,7 @@ def checkTX_PVLSMeasureReport(context) :
     isSuccessful = False
     while (count < 5 and isSuccessful == False) :          
        
-        response = requests.get( context.TX_PVLSUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
+        response = requests.get( context.evaluateMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
         count += 1
         if (response.status_code > 204) :
             time.sleep(5)
@@ -99,7 +99,7 @@ def checkTX_PVLSMeasureReport(context) :
         else :
             data = response.json() 
             context.measureScore =  data['group'][0]['measureScore']['value']
-            if(round(context.measureScore, 2) == context.txpvlsScore):
+            if(round(context.measureScore, 2) == context.expextedMeasureScore):
                 isSuccessful = True        
                 break
             else :
