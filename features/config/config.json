@@ -36,5 +36,8 @@
       "username":"hapi",
       "password":"hapi123"
    },
-   "TX_PVLS-SCORE":0.33
+   "MeasureResourceId" : "TX-PVLS" ,
+   "MeasureScore":0.33 ,
+   "IndicatorStartDate" : "2021-01-01" ,
+   "IndicatorEndDate" : "2021-12-31"
 }
