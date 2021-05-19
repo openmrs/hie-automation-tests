@@ -4,7 +4,7 @@ from features.steps import CommonSteps
 import json
 
 
-@when('we post data to OpenMRS')
+@when('Obs data is POSTed to OpenMRS')
 def postObsDataToOpenMRS(context):
     CommonSteps.innitializeData(context) 
     obs1 =  CommonSteps.readJsonData('../data/obs1.json')
@@ -15,15 +15,15 @@ def postObsDataToOpenMRS(context):
     OpenMRSService.postObsFhirData(context ,obs3)
   
 
-@then('OpenHIM should track the Transactions')
+@then('OpenHIM should track the transactions exported by the analytics engine')
 def checkOpenHIMTransactions(context):
     CommonSteps.innitializeData(context)    
     OpenHIMService.checkOpenHIMPLIRTransaction(context)
   
 
-@then('TXPVLS indicator should be calculated in HapiFHIR')
+@then('CQL engine intergrated in HapiFHIR should calculate the TX_PVLS Indicator')
 def CheckTxpvlsMeasureScore(context):
     CommonSteps.innitializeData(context)  
-    HapiFhirService.checkTX_PVLSMeasureReport(context)
+    HapiFhirService.checkIndicatorMeasureScore(context)
     
          

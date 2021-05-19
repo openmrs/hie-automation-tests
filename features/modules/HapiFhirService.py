@@ -85,8 +85,8 @@ def checkFhirData(context) :
     response.close()         
     assert (isSuccessful)
     
-def checkTX_PVLSMeasureReport(context) :    
-    logging.info("Check HAPI-FHIR for TX_PVLS REPORT - ")
+def checkIndicatorMeasureScore(context) :    
+    logging.info("Check HAPI-FHIR for Indicator Measure Score")
     count = 0 
     isSuccessful = False
     while (count < 5 and isSuccessful == False) :          
