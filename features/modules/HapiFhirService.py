@@ -11,9 +11,12 @@ def __init__(context):
     context.fhirPatientUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Patient/'
     context.fhirEncounterUrl =  context.configData["HAPI-FHIR"]["baseUrl"] + '/Encounter?patient='
     context.fhirObservationUrl =  context.configData["HAPI-FHIR"]["baseUrl"] + '/Observation?patient='
-    context.evaluateMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["MeasureResourceId"] + '/$evaluate-measure?periodStart=' + context.configData["IndicatorStartDate"] + '&periodEnd=' + context.configData["IndicatorEndDate"] 
+    context.evaluateTX_PVLSMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["TX-PVLS"]["MeasureResourceId"] + '/$evaluate-measure?periodStart=' + context.configData["TX-PVLS"]["IndicatorStartDate"] + '&periodEnd=' + context.configData["TX-PVLS"]["IndicatorEndDate"] 
+    context.evaluateTX_CURRMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["TX-CURR"]["MeasureResourceId"] + '/$evaluate-measure?periodStart=' + context.configData["TX-CURR"]["IndicatorStartDate"] + '&periodEnd=' + context.configData["TX-CURR"]["IndicatorEndDate"] 
+    context.tevaluateTX_CURRMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["TX-CURR"]["MeasureResourceId"] + '/$collect-data?periodStart=' + context.configData["TX-CURR"]["IndicatorStartDate"] + '&periodEnd=' + context.configData["TX-CURR"]["IndicatorEndDate"] 
     context.Hapi = context.configData["HAPI-FHIR"]
-    context.expextedMeasureScore =context.configData["MeasureScore"] 
+    context.expectedMeasuretx_pvlsScore = context.configData["TX-PVLS"]["MeasureScore"] 
+    context.expectedMeasuretx_currCount = context.configData["TX-CURR"]["Count"] 
     
 def deleteOldHapiFhirRecords(context, deleteDataFileName): 
     logging.info ('Starting cleaning of previous run HAPI-FHIR data')
@@ -91,7 +94,7 @@ def checkIndicatorMeasureScore(context) :
     isSuccessful = False
     while (count < 5 and isSuccessful == False) :          
        
-        response = requests.get( context.evaluateMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
+        response = requests.get( context.evaluateTX_PVLSMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
         count += 1
         if (response.status_code > 204) :
             time.sleep(5)
@@ -99,7 +102,7 @@ def checkIndicatorMeasureScore(context) :
         else :
             data = response.json() 
             context.measureScore =  data['group'][0]['measureScore']['value']
-            if(round(context.measureScore, 2) == context.expextedMeasureScore):
+            if(round(context.measureScore, 2) == context.expectedMeasuretx_pvlsScore):
                 isSuccessful = True        
                 break
             else :
@@ -107,4 +110,29 @@ def checkIndicatorMeasureScore(context) :
                 break
         
     response.close()         
-    assert (isSuccessful)      
+    assert (isSuccessful) 
+
+def checkIndicatorMeasureScoreTx_curr(context) :    
+    logging.info("Check HAPI-FHIR for Indicator Measure Score")
+    count = 0 
+    isSuccessful = False
+    while (count < 5 and isSuccessful == False) :          
+
+        response = requests.get( context.evaluateTX_CURRMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
+        count += 1
+        if (response.status_code > 204) :
+            time.sleep(5)
+            continue
+        else :
+            data = response.json() 
+            context.measureScore =  data['group'][0]['population'][0]['count']
+
+            if(context.measureScore == context.expectedMeasuretx_currCount):
+                isSuccessful = True        
+                break
+            else :
+                isSuccessful = False
+                break
+
+    response.close()         
+    assert (isSuccessful)               
