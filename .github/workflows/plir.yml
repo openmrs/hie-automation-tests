@@ -18,7 +18,7 @@ jobs:
     # - name: 'Cloning plir-dockerised-set-up'
     # run: |
     #   snip
-    #   git clone https://github.com/openmrs/openmrs-plir-dockerized-setup.git 
+    #   git clone https://github.com/openmrs/openmrs-plir-dockerized-setup.git.
     - name: Checkout in plir dockerised setup
       uses: actions/checkout@main
       with:
