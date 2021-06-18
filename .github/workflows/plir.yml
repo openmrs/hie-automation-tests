@@ -1,4 +1,7 @@
-name: plir-github-actions
+ This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
 
 on:
   push:
@@ -7,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-plir:
+  build1:
     runs-on: ubuntu-latest
     steps:
     # - name: 'Cloning plir-dockerised-set-up'
@@ -21,28 +24,22 @@ jobs:
         # path: openmrs-plir-dockerized-setup.git
     - name:  run plir setup 
       run:   |
-              chmod +x ./run.sh        
-
-  build-hie:
-    needs: build-plir
+              chmod +x ./run.sh
+  build2:
+    needs: build1
 
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     python-version: [3.7, 3.8, 3.9]
-      
+
     steps:
-    # - uses: actions/checkout@v2
-    - name: Set up Python  ${{ matrix.python-version }}
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: '3.7'
-    # - name: Display Python version
-    #     run: python -c "import sys; print(sys.version)"    
+        python-version: 3.9
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
+        pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
@@ -52,10 +49,10 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest  
+        pytest
     - name: Set up behave
       run: pip install behave
-    steps:
+#    steps:
     # - name: 'Cloning hie automation framework'
     # run: |
     #   snip
@@ -66,5 +63,4 @@ jobs:
         repository: openmrs/hie-automation-tests.git
         # path: hie-automation-tests.git
     - name:  run automation tests
-      run: behave --no-logcapture --include ./features/PLIR                   
-    
+      run: behave --no-logcapture --include ./features/PLIR    
