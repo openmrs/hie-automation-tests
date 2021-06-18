@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build1:
+  build-plir:
     runs-on: ubuntu-latest
     steps:
     # - name: 'Cloning plir-dockerised-set-up'
@@ -25,7 +25,7 @@ jobs:
     - name:  run plir setup 
       run:   |
               chmod +x ./run.sh
-  build2:
+  build-hie:
     needs: build1
 
     runs-on: ubuntu-latest
@@ -61,6 +61,6 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: openmrs/hie-automation-tests.git
-        # path: hie-automation-tests.git.
+        # path: hie-automation-tests.git
     - name:  run automation tests
       run: behave --no-logcapture --include ./features/PLIR    
