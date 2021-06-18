@@ -61,6 +61,6 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: openmrs/hie-automation-tests.git
-        # path: hie-automation-tests.git
+        # path: hie-automation-tests.git.
     - name:  run automation tests
       run: behave --no-logcapture --include ./features/PLIR    
