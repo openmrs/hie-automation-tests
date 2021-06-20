@@ -36,8 +36,16 @@
       "username":"hapi",
       "password":"hapi123"
    },
-   "MeasureResourceId" : "TX-PVLS" ,
-   "MeasureScore":0.33 ,
-   "IndicatorStartDate" : "2021-01-01" ,
-   "IndicatorEndDate" : "2021-12-31"
+   "TX-PVLS":{
+      "MeasureResourceId" : "TX-PVLS" ,
+      "MeasureScore":0.33 ,
+      "IndicatorStartDate" : "2021-01-01" ,
+      "IndicatorEndDate" : "2021-12-31"
+   },
+   "TX-CURR":{
+      "MeasureResourceId" : "TX-CURR" ,
+      "Count":1 ,
+      "IndicatorStartDate" : "2021-01-01" ,
+      "IndicatorEndDate" : "2021-07-02"
+   }
 }
