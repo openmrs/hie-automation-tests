@@ -1,4 +1,4 @@
-name: plir-github-actions
+name: PLIR CI Automated Testing
 
 on:
 

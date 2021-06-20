@@ -155,7 +155,9 @@ Update the config.json located under the config folder. All elements except HAPI
    	behave --no-logcapture --include ./features/CBR_Multi_location_HIVCareContinuum  
 
 ## TESTING PLIR SETUP
-see [PLIR-TEST](./PLIR-TEST.md)
+see [PLIR-TEST](./PLIR-TEST.md)  
+
+![Build Status](https://github.com/openmrs/hie-automation-tests/actions/workflows/plir.yml/badge.svg)
 
 ## Public Domain Standard Notice
 This repository constitutes a work of the United States Government and is not
