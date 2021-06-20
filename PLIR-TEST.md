@@ -1,6 +1,7 @@
 ## TESTING PLIR SETUP
 see  [PLIR Archtecture](https://wiki.openmrs.org/display/projects/Architectural+Design+Approach+to+support+an+integrated+approach+to+patient-level+indicator+reporting+for+OpenMRS)
 
+![Build Status](https://github.com/openmrs/hie-automation-tests/actions/workflows/plir.yml/badge.svg)
 ### Assumptions
 User has familiarity with OpenMRS, OpenHIM , Python, and BDD framework Behave is assumed. Familiarity with HIE components is recommended.
 
