@@ -118,15 +118,6 @@ def checkIndicatorMeasureScoreTx_curr(context) :
     while (count < 5 and isSuccessful == False) :          
 
         response = requests.get( context.evaluateTX_CURRMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
-        response2 = requests.get( context.tevaluateTX_CURRMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
-        print("xxxxxxxxxxxxxxxxxxxxxxxx")
-        print (response)
-        print("xxxxxxxxxxxxxxxxxxxxxxxx")
-
-        print("cccccccccccccccccccccccc")
-        print (response2.json)
-        print("ccccccccccccccccccccccccc")
-
         count += 1
         if (response.status_code > 204) :
             time.sleep(5)
