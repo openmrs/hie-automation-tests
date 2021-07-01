@@ -13,7 +13,6 @@ def __init__(context):
     context.fhirObservationUrl =  context.configData["HAPI-FHIR"]["baseUrl"] + '/Observation?patient='
     context.evaluateTX_PVLSMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["TX-PVLS"]["MeasureResourceId"] + '/$evaluate-measure?periodStart=' + context.configData["TX-PVLS"]["IndicatorStartDate"] + '&periodEnd=' + context.configData["TX-PVLS"]["IndicatorEndDate"] 
     context.evaluateTX_CURRMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["TX-CURR"]["MeasureResourceId"] + '/$evaluate-measure?periodStart=' + context.configData["TX-CURR"]["IndicatorStartDate"] + '&periodEnd=' + context.configData["TX-CURR"]["IndicatorEndDate"] 
-    context.tevaluateTX_CURRMeasureUrl = context.configData["HAPI-FHIR"]["baseUrl"] + '/Measure/' + context.configData["TX-CURR"]["MeasureResourceId"] + '/$collect-data?periodStart=' + context.configData["TX-CURR"]["IndicatorStartDate"] + '&periodEnd=' + context.configData["TX-CURR"]["IndicatorEndDate"] 
     context.Hapi = context.configData["HAPI-FHIR"]
     context.expectedMeasuretx_pvlsScore = context.configData["TX-PVLS"]["MeasureScore"] 
     context.expectedMeasuretx_currCount = context.configData["TX-CURR"]["Count"] 
@@ -119,6 +118,15 @@ def checkIndicatorMeasureScoreTx_curr(context) :
     while (count < 5 and isSuccessful == False) :          
 
         response = requests.get( context.evaluateTX_CURRMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
+        response2 = requests.get( context.tevaluateTX_CURRMeasureUrl, headers={'Connection':'close'}, auth=(context.Hapi["username"], context.Hapi["password"]))
+        print("xxxxxxxxxxxxxxxxxxxxxxxx")
+        print (response)
+        print("xxxxxxxxxxxxxxxxxxxxxxxx")
+
+        print("cccccccccccccccccccccccc")
+        print (response2.json)
+        print("ccccccccccccccccccccccccc")
+
         count += 1
         if (response.status_code > 204) :
             time.sleep(5)
